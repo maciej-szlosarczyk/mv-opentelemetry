@@ -67,6 +67,5 @@ jobs:
           minimum_coverage: 70
           report_name: "Test coverage on Erlang ${{matrix.otp}} and Elixir ${{matrix.elixir}}"
           show_missing: true
-          only_changed_files: true
           link_missing_lines: true
           link_missing_lines_source_dir: lib
