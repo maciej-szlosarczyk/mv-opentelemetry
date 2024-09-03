@@ -65,6 +65,6 @@ jobs:
         with:
           path: mv_opentelemetry.covertool.xml
           minimum_coverage: 70
-          report_name: "mv-opentelemetry coverage"
+          report_name: "Test coverage on Erlang ${{matrix.otp}} and Elixir ${{matrix.elixir}}"
           show_missing: true
           link_missing_lines: true
