@@ -63,7 +63,7 @@ jobs:
       - name: Test coverage
         uses: 5monkeys/cobertura-action@v14
         with:
-          path: coverage.xml
+          path: mv_opentelemetry.covertool.xml
           minimum_coverage: 70
           report_name: "mv-opentelemetry coverage"
           show_missing: true
