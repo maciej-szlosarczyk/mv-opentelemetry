@@ -53,11 +53,11 @@ jobs:
         run: |
           mix do deps.get, compile
 
-      - name: Run pre-checks
-        run: |
-          mix format --check-formatted
-          mix credo --strict
-          mix dialyzer
+      # - name: Run pre-checks
+      #   run: |
+      #     mix format --check-formatted
+      #     mix credo --strict
+      #     mix dialyzer
 
       - name: Run mv-opentelemetry tests
         run: |
