@@ -61,7 +61,7 @@ jobs:
           mix test --cover
 
       - name: Test coverage
-        uses: 5monkeys/cobertura-action@v14
+        uses: mindvalley/cobertura-action@master
         with:
           path: mv_opentelemetry.covertool.xml
           minimum_coverage: 70
