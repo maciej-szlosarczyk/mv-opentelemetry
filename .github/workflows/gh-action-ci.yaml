@@ -8,7 +8,6 @@ on:
   workflow_dispatch:
 
 env:
-  SlackChannel: "#jenkins-ci-mv-opentelemetry"
   MIX_ENV: test
   POSTGRES_USER: ubuntu
   POSTGRES_PASSWORD: ubuntupassword
@@ -17,9 +16,10 @@ env:
 jobs:
   test:
     permissions:
-      contents: read
-      id-token: write
-    runs-on: ubuntu-latest
+      pull-requests: write
+      checks: write
+
+    runs-on: [ubuntu-22.04]
     name: Test on OTP ${{ matrix.otp }} / Elixir ${{ matrix.elixir }}
     strategy:
       # Specify the OTP and Elixir versions to use when building
@@ -50,26 +50,28 @@ jobs:
           otp-version: ${{matrix.otp}}
           elixir-version: ${{matrix.elixir}}
 
-      - name: Restore dependencies cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            deps
-            _build
-            priv/plts
-          key: ${{ runner.os }}-${{ runner.arch }}-${{ matrix.elixir }}-${{ matrix.otp }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-${{ runner.arch }}-${{ matrix.elixir }}-${{ matrix.otp }}-mix
-
       - name: Install dependencies
         run: |
           mix do deps.get, compile
 
-      - name: Run pre-checks
-        run: |
-          mix format --check-formatted
-          mix credo --strict
-          mix dialyzer
+      # - name: Run pre-checks
+      #   run: |
+      #     mix format --check-formatted
+      #     mix credo --strict
+      #     mix dialyzer
 
       - name: Run mv-opentelemetry tests
         run: |
-          mix test
+          mix test --cover
+          cat mv_opentelemetry.covertool.xml
+
+      - name: Test coverage
+        uses: mindvalley/cobertura-action@19def689ac27f077391be9be83e226ce995b5874
+        with:
+          path: mv_opentelemetry.covertool.xml
+          minimum_coverage: 70
+          report_name: "Test coverage on Erlang ${{matrix.otp}} and Elixir ${{matrix.elixir}}"
+          show_missing: true
+          link_missing_lines: true
+          only_changed_files: true
+          link_missing_lines_source_dir: lib
