@@ -65,11 +65,12 @@ jobs:
           mix test --cover
 
       - name: Test coverage
-        uses: mindvalley/cobertura-action@master
+        uses: mindvalley/cobertura-action@handle-sources-array
         with:
           path: mv_opentelemetry.covertool.xml
           minimum_coverage: 70
           report_name: "Test coverage on Erlang ${{matrix.otp}} and Elixir ${{matrix.elixir}}"
           show_missing: true
           link_missing_lines: true
+          only_changed_files: true
           link_missing_lines_source_dir: lib
