@@ -66,7 +66,7 @@ jobs:
           cat mv_opentelemetry.covertool.xml
 
       - name: Test coverage
-        uses: mindvalley/cobertura-action@aaf8dbbec5a127eda74d8c1ebedc7d6b5f94f399
+        uses: mindvalley/cobertura-action@19def689ac27f077391be9be83e226ce995b5874
         with:
           path: mv_opentelemetry.covertool.xml
           minimum_coverage: 70
