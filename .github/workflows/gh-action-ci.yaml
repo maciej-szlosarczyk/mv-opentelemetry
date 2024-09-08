@@ -63,6 +63,7 @@ jobs:
       - name: Run mv-opentelemetry tests
         run: |
           mix test --cover
+          cat mv_opentelemetry.covertool.xml
 
       - name: Test coverage
         uses: mindvalley/cobertura-action@aaf8dbbec5a127eda74d8c1ebedc7d6b5f94f399
